@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import "tailwindcss";
+
+*{
+        font-family: "Outfit", sans-serif;
+        box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    /* hide page-level scrollbars to avoid thin vertical lines on some platforms */
+    overflow: hidden !important;
+    scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important; /* IE 10+ */
+    border: 0;
+}
+
+/* Hide scrollbars globally for WebKit-based browsers */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
+    display: none !important;
+}
+
+/* Prevent overscroll behavior that may reveal native scrollbars */
+body, #root {
+    overscroll-behavior: none;
+}
+
+/* Fallback for any older rules */
+::-webkit-scrollbar{
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+/* Stronger overlay to hide thin native or layout lines at page edges (non-interactive) */
+html::after,
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    right: -1px; /* nudge in case the artifact is outside the viewport */
+    bottom: 0;
+    width: 100px; /* wide coverage to ensure the line is hidden */
+    pointer-events: none; /* keep UI interactions working */
+    background: #000 !important; /* solid block to ensure hiding */
+    z-index: 2147483647; /* max z-index to ensure visibility above all elements */
+    display: block !important;
+}
+
+/* Also cover the left edge just in case */
+html::before,
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: -1px;
+    bottom: 0;
+    width: 100px;
+    pointer-events: none;
+    background: #000 !important;
+    z-index: 2147483647;
+    display: block !important;
+}
+
+/* Hide scrollbar corner (WebKit) and ensure track is transparent */
+::-webkit-scrollbar-corner {
+    background: transparent !important;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+/* Ensure gutter stability so browsers don't reintroduce a gap */
+* { scrollbar-gutter: stable both-edges; }
+
+/* Hide scrollbar for WebKit-based browsers (Chrome, Edge, Safari) */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    background: transparent;
+}
+
+/* Fallback for any older rules */
+::-webkit-scrollbar{
+    display: none;
+}
