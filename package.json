@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "npm install --prefix \"client front-end\" && npm run build --prefix \"client front-end\" && npm install --prefix server",
+    "build": "cd \"client front-end\" && npm install && npm run build && cd .. && npm install --prefix server",
     "start": "node server/server.js",
     "dev": "concurrently \"npm run server --prefix server\" \"npm run dev --prefix \\\"client front-end\\\"\""
   },
