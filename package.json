@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "cd client && npm run dev",
-    "start": "npm run dev"
+    "build": "npm install --prefix \"client front-end\" && npm run build --prefix \"client front-end\" && npm install --prefix server",
+    "start": "node server/server.js",
+    "dev": "concurrently \"npm run server --prefix server\" \"npm run dev --prefix \\\"client front-end\\\"\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }

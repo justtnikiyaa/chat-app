@@ -2,6 +2,8 @@ import express from 'express';
 import "dotenv/config";
 import cors from 'cors';
 import http from 'http';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { connectDB } from './lib/db.js';
 import userRouter from './routes/userRoutes.js';
 import messageRouter from './routes/messageRoutes.js';
@@ -39,10 +41,22 @@ io.on("connection", (socket) => {
 app.use(cors());
 app.use(express.json({limit: '4mb'}));
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 //Routes setup
 app.use("/api/status", (req, res) => res.send("Server is running"));
 app.use("/api/auth", userRouter);
 app.use("/api/messages", messageRouter);
+
+// Serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../client front-end/dist')));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, '../client front-end/dist/index.html'));
+    });
+}
 
 //connect to MongoDB
 await connectDB()
