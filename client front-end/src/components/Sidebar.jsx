@@ -45,10 +45,10 @@ const Sidebar = () => {
             />
 
             {showMenu && (
-              <div onClick={(e) => e.stopPropagation()} className='absolute top-full right-0 z-20 w-32 p-5 rounded-md bg-[#282142] border border-gray-600 text-gray-100'>
-                <p onClick={() => { setShowMenu(false); navigate('/profile'); }} className='cursor-pointer text-sm'>Edit Profile</p>
-                <hr className="my-2 border-t border-gray-500"/>
-                <p onClick={() => { setShowMenu(false); logout(); }} className='cursor-pointer text-sm'>Logout</p>
+              <div onClick={(e) => e.stopPropagation()} className='absolute top-full right-0 z-20 w-32 p-3 rounded-md bg-[#282142] border border-gray-600 text-gray-100 flex flex-col gap-1'>
+                <p onClick={() => navigate('/profile')} className='cursor-pointer text-sm w-full py-2 px-3 hover:bg-white/5 rounded-md block'>Edit Profile</p>
+                <hr className="border-gray-700"/>
+                <p onClick={() => logout()} className='cursor-pointer text-sm w-full py-2 px-3 hover:bg-white/5 rounded-md block'>Logout</p>
               </div>
             )}
           </div>
