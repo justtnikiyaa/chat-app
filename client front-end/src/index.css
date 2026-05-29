@@ -39,35 +39,7 @@ body, #root {
     height: 0;
 }
 
-/* Stronger overlay to hide thin native or layout lines at page edges (non-interactive) */
-html::after,
-body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    right: -1px; /* nudge in case the artifact is outside the viewport */
-    bottom: 0;
-    width: 100px; /* wide coverage to ensure the line is hidden */
-    pointer-events: none; /* keep UI interactions working */
-    background: #000 !important; /* solid block to ensure hiding */
-    z-index: 2147483647; /* max z-index to ensure visibility above all elements */
-    display: block !important;
-}
 
-/* Also cover the left edge just in case */
-html::before,
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: -1px;
-    bottom: 0;
-    width: 100px;
-    pointer-events: none;
-    background: #000 !important;
-    z-index: 2147483647;
-    display: block !important;
-}
 
 /* Hide scrollbar corner (WebKit) and ensure track is transparent */
 ::-webkit-scrollbar-corner {
