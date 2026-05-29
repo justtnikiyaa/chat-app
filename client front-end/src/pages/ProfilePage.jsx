@@ -10,19 +10,25 @@ const ProfilePage = () => {
 
   const [selectedImg, setSelectedImg] = useState(null);
   const navigate = useNavigate();
-    const [name, setName] = useState(authUser?.fullname || '');
-    const [bio, setBio] = useState(authUser?.bio || '');
+  const [name, setName] = useState(authUser?.fullname || '');
+  const [bio, setBio] = useState(authUser?.bio || '');
+  const [isUpdating, setIsUpdating] = useState(false);
 
-    useEffect(() => {
-      setName(authUser?.fullname || '');
-      setBio(authUser?.bio || '');
-    }, [authUser]);
+  useEffect(() => {
+    setName(authUser?.fullname || '');
+    setBio(authUser?.bio || '');
+  }, [authUser]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsUpdating(true);
+
     if(!selectedImg){
-      await updateProfile({fullname: name, bio });
-      navigate('/');
+      const success = await updateProfile({fullname: name, bio });
+      setIsUpdating(false);
+      if (success) {
+        navigate('/');
+      }
       return;
     }
 
@@ -30,8 +36,11 @@ const ProfilePage = () => {
     reader.readAsDataURL(selectedImg);
     reader.onloadend = async () => {
       const base64Image = reader.result;
-      await updateProfile({profilePic: base64Image, fullname: name, bio});
-      navigate('/');
+      const success = await updateProfile({profilePic: base64Image, fullname: name, bio});
+      setIsUpdating(false);
+      if (success) {
+        navigate('/');
+      }
     }
   }
 
@@ -62,7 +71,9 @@ const ProfilePage = () => {
               rows={6}
             ></textarea>
           
-          <button type="submit" className="bg-gradient-to-r from-purple-400 to-violet-600 text-white p-2 rounded-full text-lg cursor-pointer">Save</button>
+          <button type="submit" disabled={isUpdating} className="bg-gradient-to-r from-purple-400 to-violet-600 text-white p-2 rounded-full text-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+            {isUpdating ? "Saving..." : "Save"}
+          </button>
         </form>
           <img className={`max-w-44 aspect-square rounded-full mx-10 max-sm:mt-10 ${(selectedImg || authUser?.profilePic) && 'rounded-full'}`} src={selectedImg ? URL.createObjectURL(selectedImg) : (authUser?.profilePic || assets.logo_icon)} alt="profile" />
         </div>
