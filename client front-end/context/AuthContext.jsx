@@ -3,7 +3,9 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 
-const backendURL = import.meta.env.VITE_BACKEND_URL || window.location.origin;
+const backendURL = import.meta.env.DEV 
+    ? (import.meta.env.VITE_BACKEND_URL || "http://localhost:5001") 
+    : window.location.origin;
 axios.defaults.baseURL = backendURL;
 
 export const AuthContext = createContext();
