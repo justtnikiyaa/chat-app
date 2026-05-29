@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import assets from '../assets/assets'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
 import { ChatContext } from '../../context/ChatContext'
 
@@ -46,7 +46,7 @@ const Sidebar = () => {
 
             {showMenu && (
               <div onClick={(e) => e.stopPropagation()} className='absolute top-full right-0 z-20 w-32 p-3 rounded-md bg-[#282142] border border-gray-600 text-gray-100 flex flex-col gap-1'>
-                <p onClick={() => navigate('/profile')} className='cursor-pointer text-sm w-full py-2 px-3 hover:bg-white/5 rounded-md block'>Edit Profile</p>
+                <Link to='/profile' className='cursor-pointer text-sm w-full py-2 px-3 hover:bg-white/5 rounded-md block'>Edit Profile</Link>
                 <hr className="border-gray-700"/>
                 <p onClick={() => logout()} className='cursor-pointer text-sm w-full py-2 px-3 hover:bg-white/5 rounded-md block'>Logout</p>
               </div>

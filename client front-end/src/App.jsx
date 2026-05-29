@@ -8,10 +8,18 @@ import { AuthContext } from '../context/AuthContext.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 
 const App = () => {
-  const {authUser} = useContext(AuthContext);
+  const { authUser, isCheckingAuth } = useContext(AuthContext);
+
+  if (isCheckingAuth) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#282142] text-white">
+        <p className="text-xl font-medium animate-pulse">Loading...</p>
+      </div>
+    );
+  }
+
   return (
-    <div
-    className="bg-[url('/bgImage.svg')] bg-contain ">
+    <div className="bg-[url('/bgImage.svg')] bg-contain min-h-screen">
       <Toaster/>
       <ErrorBoundary>
         <Routes>

@@ -16,6 +16,7 @@ export const AuthProvider = ({ children }) => {
     const [authUser, setAuthUser] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([]); // default to empty array to avoid .includes on null
     const [socket, setSocket] = useState(null);
+    const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
     //check if user is authenticated and if so, set the user data and connect to socket   
 
@@ -26,10 +27,14 @@ export const AuthProvider = ({ children }) => {
             if (data?.success) {
                 setAuthUser(data.user);
                 connectSocket(data.user);
+            } else {
+                setAuthUser(null);
             }
         } catch (error) {
             console.error('checkAuth error:', error);
-            toast.error(error.message)
+            setAuthUser(null);
+        } finally {
+            setIsCheckingAuth(false);
         }
     }
 
@@ -128,9 +133,8 @@ export const AuthProvider = ({ children }) => {
         socket,
         login,
         logout,
-        updateProfile
-
-
+        updateProfile,
+        isCheckingAuth
     }
 
     return (
